@@ -23,23 +23,23 @@ namespace ConsoleUI
         //    Console.WriteLine(addedRental.Message);
         //}
 
-        private static void BrandTest()
-        {
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
-            foreach (var brand in brandManager.GetAll())
-            {
-                Console.WriteLine(brand.BrandName);
-            }
-        }
+        //private static void BrandTest()
+        //{
+        //    BrandManager brandManager = new BrandManager(new EfBrandDal());
+        //    foreach (var brand in brandManager.GetAll())
+        //    {
+        //        Console.WriteLine(brand.BrandName);
+        //    }
+        //}
 
-        private static void ColorTest()
-        {
-            ColorManager colorManager = new ColorManager(new EfColorrDal());
-            foreach (var color in colorManager.GetAll())
-            {
-                Console.WriteLine(color.ColorName);
-            }
-        }
+        //private static void ColorTest()
+        //{
+        //    ColorManager colorManager = new ColorManager(new EfColorrDal());
+        //    foreach (var color in colorManager.GetAll())
+        //    {
+        //        Console.WriteLine(color.ColorName);
+        //    }
+        //}
 
         private static void CarTest()
         {
