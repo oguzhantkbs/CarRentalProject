@@ -35,8 +35,11 @@ namespace WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
             });
-            services.AddScoped<ICarService, CarManager>();
-            services.AddScoped<ICarDal, EfCarDal>();
+
+            //Built in IOC
+
+            //services.AddScoped<ICarService, CarManager>();
+            //services.AddScoped<ICarDal, EfCarDal>();
 
         }
 
