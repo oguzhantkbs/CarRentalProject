@@ -16,10 +16,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Concrete
-{    
+{
     public class CarManager : ICarService
     {
-        readonly ICarDal _carDal;
+        ICarDal _carDal;
 
         public CarManager(ICarDal carDal)
         {
@@ -29,45 +29,21 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            //FluentValidationCheck
-            ValidationTool.Validate(new CarValidator(), car);
-
             _carDal.Add(car);
-            return new SuccessResult(Messages.CarAdded);
-        
-        }
-     
-        public IResult Update(Car car)
-        {
-            _carDal.Update(car);
-            return new SuccessResult();
 
+            return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
-            return new Result(true, "Ürün Eklendi");
-
+            return new SuccessResult(Messages.CarDeleted);
         }
 
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
         }
-
-        public IDataResult<List<Car>> GetCarsByBrandId(int id)
-        {
-            return new DataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id), true, "Ürüler Listelendi");
-        }
-
-        public IDataResult<List<Car>> GetCarsByColorId(int id)
-        {
-
-            return new DataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id), true, "Ürünler Listelendi");
-
-        }
-
 
         public IDataResult<Car> GetById(int id)
         {
@@ -79,6 +55,21 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
-   
+        public IDataResult<List<Car>> GetCarsByBrandId(int brandid)
+        {
+            throw new Exception("Burası Yazılacak");
+            //return new SuccessDataResult<List<Car>>(_carDal.Get(c => c.BrandId == brandid));
+        }
+
+        public IDataResult<List<Car>> GetCarsByColorId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IResult Update(Car car)
+        {
+            _carDal.Update(car);
+            return new SuccessResult(Messages.CarUpdated);
+        }
     }
 }

@@ -57,6 +57,12 @@ namespace WebAPI
 
             app.UseAuthorization();
 
+            app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
+
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

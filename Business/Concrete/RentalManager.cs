@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,41 +22,33 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
+        public IResult Add(Rental rental)
+        {
+            _rentalDal.Add(rental);
+            return new SuccessResult(Messages.RentalAdded);
+        }
+
+        public IResult Delete(Rental rental)
+        {
+            _rentalDal.Delete(rental);
+            return new SuccessResult(Messages.RentalDeleted);
+        }
+
         public IDataResult<List<Rental>> GetAll()
         {
-            var result = _rentalDal.GetAll();
-            return new SuccessDataResult<List<Rental>>(result, Messages.RentalsListed);
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
         }
 
         public IDataResult<Rental> GetById(int rentalId)
         {
-            var result = _rentalDal.Get(r => r.id == rentalId);
-            return new SuccessDataResult<Rental>(result);
-        }
-
-        public IResult Add(Rental rental)
-        {
-            var result = _rentalDal.GetAll(r => r.CardId == rental.CardId && !r.ReturnDate.HasValue);
-            if (!result.Any())
-            {
-                _rentalDal.Add(rental);
-                return new SuccessResult(Messages.RentalAdded);
-            }
-
-            return new ErrorResult(Messages.RentalNotComeBack);
-
+            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.id == rentalId));
         }
 
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
-            return new SuccessResult(Messages.CarUpdated);
-        }
-
-        public IResult Delete(int rentalId)
-        {
-            _rentalDal.Delete(new Rental { id = rentalId });
-            return new SuccessResult(Messages.RentalDeleted);
+            return new SuccessResult(Messages.RentalUpdated);
         }
     }
 }
